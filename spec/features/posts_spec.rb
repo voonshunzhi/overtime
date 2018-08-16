@@ -2,14 +2,25 @@ require 'rails_helper'
 
 RSpec.feature "Posts", type: :feature do
     describe "index " do
+        before do
+            @user = User.create(email:"hello@gmail.com",password:"password",first_name:"Jorden",last_name:"Hudgens",username:"Jorden")
+            login_as(@user)
+            visit posts_path
+        end
+        
         scenario "visit index page" do
-              visit posts_path
               expect(page.status_code).to eq 200
         end
         
         scenario "visit root path and should have title post" do
-              visit posts_path
-              expect(page).to have_content("Posts")
+              expect(page).to have_content(/Posts/)
+         end
+         
+         scenario "it has a lists of posts" do
+             post1 = Post.create!(date: Date.today,rationale:"Rationale 1",user: @user)
+             post2 = Post.create!(date: Date.today,rationale:"Rationale 2",user: @user)
+             visit posts_path
+             expect(page).to have_content(/Rationale 1|Rationale 2/)
          end
     end
   

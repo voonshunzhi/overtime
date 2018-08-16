@@ -15,7 +15,8 @@ gem 'devise'
 gem 'guard'
 gem 'guard-rspec'
 gem 'guard-cucumber'
-
+gem 'jquery-rails'
+gem 'bootstrap', '~> 4.1.3'
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'guard-livereload', '~> 2.5', require: false
