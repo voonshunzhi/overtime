@@ -12,8 +12,14 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'devise'
+gem 'guard'
+gem 'guard-rspec'
+gem 'guard-cucumber'
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'guard-livereload', '~> 2.5', require: false
+  gem 'rack-livereload', '~> 0.3.16'
 end
 
 group :development do

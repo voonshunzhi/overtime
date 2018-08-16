@@ -23,4 +23,5 @@ Rails.application.configure do
   config.assets.quiet = true
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
   config.action_mailer.default_url_options = { host: 'https://voonmanagement-voonshunzhi.c9users.io/', port: 8080 }
+  #config.middleware.insert_after ActionDispatch::Static, Rack::LiveReload, host: 'voonmanagement-voonshunzhi.c9users.io/', port: 8081
 end
