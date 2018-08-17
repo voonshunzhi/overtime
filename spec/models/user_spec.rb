@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   before do
-      @user = User.create(email:"voonshunzhi@gmail.com",password:"password",first_name:"Jon",last_name:"Dorenbos")
+      @user = FactoryGirl.create(:user)
       login_as(@user, :scope => :user)
   end
   
@@ -21,7 +21,7 @@ RSpec.describe User, type: :model do
   
   describe "custom name methods" do
     it "has a full name method that combine the first name and last name" do
-      expect(@user.full_name).to eq "Jon Dorenbos"
+      expect(@user.full_name).to eq "James Wong01"
     end
   end
 end

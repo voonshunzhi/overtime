@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.feature "Posts", type: :feature do
     describe "index " do
         before do
-            @user = User.create(email:"hello@gmail.com",password:"password",first_name:"Jorden",last_name:"Hudgens",username:"Jorden")
+            @user = FactoryGirl.create(:second_user)
             login_as(@user)
             visit posts_path
         end
@@ -17,16 +17,16 @@ RSpec.feature "Posts", type: :feature do
          end
          
          scenario "it has a lists of posts" do
-             post1 = Post.create!(date: Date.today,rationale:"Rationale 1",user: @user)
-             post2 = Post.create!(date: Date.today,rationale:"Rationale 2",user: @user)
+             post1 = FactoryGirl.create(:post)
+             post2 = FactoryGirl.create(:second_post)
              visit posts_path
-             expect(page).to have_content(/Rationale 1|Rationale 2/)
+             expect(page).to have_content(/Some Rationale|Yesterday rationale/)
          end
     end
   
     describe "creation" do
         before do
-            @user = User.create(email:"hello@gmail.com",password:"password",first_name:"Jorden",last_name:"Hudgens",username:"Jorden")
+            @user = FactoryGirl.create(:second_user)
             login_as(@user)
             visit new_post_path
         end
@@ -40,6 +40,32 @@ RSpec.feature "Posts", type: :feature do
             click_button "Save"
             
             expect(page).to have_content("some rationale")
+        end
+    end
+    
+    describe "edit" do
+        before do
+            @user = FactoryGirl.create(:second_user)
+            login_as(@user)
+            @post = FactoryGirl.create(:post)
+        end
+        it "can be reached" do
+            
+            visit posts_path
+            
+            click_link("edit_#{@post.id}")
+            expect(page.status_code).to eq 200
+        end
+        
+        it "can be edited" do
+            visit edit_post_path(@post)
+            
+            fill_in "post[date]",with: Date.tomorrow
+            fill_in "post[rationale]",with: "Edited content"
+            
+            click_on "Save"
+            
+            expect(page).to have_content "Edited content"
         end
     end
   
